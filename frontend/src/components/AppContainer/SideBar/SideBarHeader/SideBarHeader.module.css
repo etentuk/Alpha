@@ -1,0 +1,23 @@
+.container {
+    position: relative;
+    padding: 0 24px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.linkContainer {
+    display: flex;
+    align-items: center;
+    height: 64px;
+}
+
+.linkContainer h1 {
+    display: inline-block;
+    margin: 0 0 0 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    animation: fade-in 0.3s;
+}

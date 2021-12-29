@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    padding: 0 !important;
+    background-color: #fff !important;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collapsedIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.dropDown {
+    margin-right: 15px;
+}

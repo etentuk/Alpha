@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
-from django.contrib.contenttypes.models import ContentType
 from django.db.models.fields.related import ForeignKey, ManyToManyField
 from simple_history.models import HistoricalRecords
 import uuid
@@ -26,6 +25,25 @@ class User(AbstractUser):
         permissions = [(
             "change_role", "Can Edit the role of a User")]
 
+    def save(self, *args, **kwargs):
+        if self.role == self.ADMIN:
+            group = Group.objects.get(name='admins')
+            group.user_set.add(self)
+        elif self.role == self.PROJECT_MANAGER:
+            group = Group.objects.get(name='project managers')
+            group.user_set.add(self)
+        elif self.role == self.DEVELOPER:
+            group = Group.objects.get(name='developers')
+            group.user_set.add(self)
+        elif self.role == self.SUBMITTER:
+            group = Group.objects.get(name='submitters')
+            group.user_set.add(self)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.username}, id: {self.id}"
+
 
 class Project(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -42,7 +60,7 @@ class Project(models.Model):
         ordering = ['timestamp']
 
     def __str__(self):
-        return f"{self.name} created by {self.creator.username}"
+        return f"{self.name} created by {self.creator}"
 
 
 class Ticket(models.Model):
@@ -110,9 +128,10 @@ class Ticket(models.Model):
 
 
 class Comment(models.Model):
-    commenter = ForeignKey(User, on_delete=CASCADE, related_name="comments")
+    commenter = ForeignKey(User, on_delete=CASCADE, related_name="user_comments")
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    ticket = ForeignKey(Ticket, on_delete=CASCADE, related_name="ticket_comments")
 
     class Meta:
         ordering = ['timestamp']

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -25,6 +26,8 @@ SECRET_KEY = 'django-insecure-hce6oo=@uevi#yxg6@qp!$g0rj$)lnm#ld^4fgk6xui(tmw+^0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+print(os.path.join(BASE_DIR, 'bugtracker/templates'))
+
 ALLOWED_HOSTS = []
 
 
@@ -37,11 +40,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     'rest_framework',
+    'rest_framework.authtoken',
+
+    'dj_rest_auth',
+
+    'dj_rest_auth.registration',
+
+
+    "corsheaders",
+
     'bugtracker'
 ]
 
+SITE_ID = 1
+
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +79,7 @@ ROOT_URLCONF = 'alpha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'bugtracker/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +91,19 @@ TEMPLATES = [
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     # allauth specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     # Needed to login by username in Django admin, regardless of allauth
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
 
@@ -124,3 +160,34 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'etentukcodes@gmail.com'
+EMAIL_HOST_PASSWORD = 'Productivity20'
+EMAIL_PORT = 587
+
+CUSTOM_PASSWORD_RESET_CONFIRM = 'http://localhost:3000/password-reset/'
+
+##CORSHEADERS
+CORS_ALLOW_ALL_ORIGINS = True
+
+## REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+       'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'bugtracker.api.serializers.CustomRegisterSerializer',
+}
+
+REST_AUTH_SERIALIZERS = {
+    'PASSWORD_RESET_SERIALIZER': 'bugtracker.api.serializers.MyPasswordResetSerializer'
+}
