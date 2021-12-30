@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios';

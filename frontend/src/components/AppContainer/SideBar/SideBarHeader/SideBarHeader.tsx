@@ -11,7 +11,7 @@ const SideBarHeader: FC<{ collapsed: boolean }> = ({ collapsed }) => {
                 <BugOutlined
                     style={{ display: 'inline-block', fontSize: '32px' }}
                 />
-                <h1 style={{ visibility }}>Bug Tracker</h1>
+                <h1 style={{ visibility }}>Quinta</h1>
             </Link>
         </div>
     );

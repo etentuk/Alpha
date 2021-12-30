@@ -45,7 +45,6 @@ const SideBar: FC<Props> = ({ collapsed }) => {
         </Menu.Item>
     );
 
-    console.log(user);
     return (
         <Sider width={256} collapsed={collapsed} className={styles.container}>
             <SideBarHeader collapsed={collapsed} />

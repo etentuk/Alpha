@@ -80,6 +80,7 @@ const Login: FC = () => {
                 <Text>
                     Forgot Password?
                     <Link to="../request-password-reset">
+                        {' '}
                         Reset your Password
                     </Link>
                 </Text>
