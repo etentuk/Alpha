@@ -9,8 +9,16 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 
 from pathlib import Path
+
+
+from dotenv import dotenv_values
+
+
+config = dotenv_values('.env')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hce6oo=@uevi#yxg6@qp!$g0rj$)lnm#ld^4fgk6xui(tmw+^0'
+SECRET_KEY = config["SECRET_KEY"]
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config["DEBUG"]
+
 
 ALLOWED_HOSTS = []
 
@@ -37,11 +47,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     'rest_framework',
+    'rest_framework.authtoken',
+
+    'dj_rest_auth',
+
+    'dj_rest_auth.registration',
+
+
+    "corsheaders",
+
     'bugtracker'
 ]
 
+SITE_ID = 1
+
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +86,7 @@ ROOT_URLCONF = 'alpha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'bugtracker/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +98,11 @@ TEMPLATES = [
         },
     },
 ]
+
+ACCOUNT_EMAIL_VERIFICATION = config["ACCOUNT_EMAIL_VERIFICATION"]
+
+ACCOUNT_EMAIL_REQUIRED = config["ACCOUNT_EMAIL_REQUIRED"]
+
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
 
@@ -124,3 +159,33 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = config["EMAIL_BACKEND"]
+EMAIL_USE_TLS = config["EMAIL_USE_TLS"]
+EMAIL_HOST = config["EMAIL_HOST"]
+EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = config["EMAIL_PORT"]
+
+
+##CORSHEADERS
+CORS_ALLOW_ALL_ORIGINS = True
+
+## REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+       'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'bugtracker.api.serializers.CustomRegisterSerializer',
+}
+
+REST_AUTH_SERIALIZERS = {
+    'PASSWORD_RESET_SERIALIZER': 'bugtracker.api.serializers.MyPasswordResetSerializer'
+}

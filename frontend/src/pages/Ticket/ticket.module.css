@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.ticketDetailsBody {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.ticketDetailsTextLeft {
+    width: 45%; padding: 20px;
+}
+
+.ticketDetailsTextRight {
+    width: 45%;
+    text-align: left;
+    padding: 20px;
+}
+
+.ticketExtras {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 20px;
+    max-height: 60vh;
+}
+
+.ticketDetailsRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+}
+
+
+
+
