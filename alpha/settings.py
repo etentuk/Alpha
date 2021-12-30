@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 
+from boto.s3.connection import S3Connection
+
 from pathlib import Path
 
 
@@ -28,11 +30,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config["SECRET_KEY"]
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config["DEBUG"]
+DEBUG = os.environ.get("DEBUG")
 
 
 ALLOWED_HOSTS = ['alpha-bugtracker.herokuapp.com']
@@ -99,9 +101,9 @@ TEMPLATES = [
     },
 ]
 
-ACCOUNT_EMAIL_VERIFICATION = config["ACCOUNT_EMAIL_VERIFICATION"]
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION")
 
-ACCOUNT_EMAIL_REQUIRED = config["ACCOUNT_EMAIL_REQUIRED"]
+ACCOUNT_EMAIL_REQUIRED = os.environ.get("ACCOUNT_EMAIL_REQUIRED")
 
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
@@ -162,12 +164,12 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = config["EMAIL_BACKEND"]
-EMAIL_USE_TLS = config["EMAIL_USE_TLS"]
-EMAIL_HOST = config["EMAIL_HOST"]
-EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
-EMAIL_PORT = config["EMAIL_PORT"]
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
 
 
 ##CORSHEADERS

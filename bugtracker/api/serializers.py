@@ -21,7 +21,7 @@ class MyPasswordResetSerializer(PasswordResetSerializer):
     #
     def save(self):
         request = self.context.get('request')
-        request.META['HTTP_HOST'] = config["FRONTEND_HTTP_HOST"]
+        # request.META['HTTP_HOST'] = config["FRONTEND_HTTP_HOST"]
         # Set some values to trigger the send_email method.
         opts = {
             'use_https': request.is_secure(),
