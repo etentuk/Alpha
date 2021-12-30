@@ -1,0 +1,22 @@
+.contentContainer {
+    overflow: scroll;
+    margin: 24px 16px;
+    padding: 24px;
+    background-color: white;
+    height: 100vh
+}
+
+.contentContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    display: flex;
+    /*max*/
+}
+
+.rightContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
