@@ -5,6 +5,9 @@ from django.db.models.fields.related import ForeignKey, ManyToManyField
 from simple_history.models import HistoricalRecords
 import uuid
 
+from django.core.exceptions import ObjectDoesNotExist
+
+
 
 class User(AbstractUser):
     ADMIN = 'ADMIN'
@@ -26,6 +29,11 @@ class User(AbstractUser):
             "change_role", "Can Edit the role of a User")]
 
     def save(self, *args, **kwargs):
+        try:
+            self.groups.clear()
+        except ValueError:
+            pass
+
         if self.role == self.ADMIN:
             group = Group.objects.get(name='admins')
             group.user_set.add(self)

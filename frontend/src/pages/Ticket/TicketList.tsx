@@ -16,7 +16,7 @@ import styles from './ticket.module.css';
 const TicketList: FC = () => {
     const { Title } = Typography;
 
-    const { tickets, users, projects } = appState;
+    const { tickets, users, projects, user } = appState;
 
     const tableData = Object.values(tickets);
 
@@ -138,9 +138,13 @@ const TicketList: FC = () => {
                     <Button>
                         <Link to={`${record.id}`}>Details</Link>
                     </Button>
-                    <Button>
-                        <Link to={`edit/${record.id}`}>Edit</Link>
-                    </Button>
+                    {user.user_permissions.includes(
+                        'bugtracker.change_ticket',
+                    ) ? (
+                        <Button>
+                            <Link to={`edit/${record.id}`}>Edit</Link>
+                        </Button>
+                    ) : null}
                 </Space>
             ),
         },

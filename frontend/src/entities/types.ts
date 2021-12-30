@@ -34,23 +34,29 @@ export type TicketComment = {
     id: number;
 };
 
+type TicketType =
+    | 'Bugs/Errors'
+    | 'Feature Request'
+    | 'Other Comments'
+    | 'Training/Document Requests';
+
+type TicketStatus =
+    | 'New'
+    | 'Open'
+    | 'In Progress'
+    | 'Review'
+    | 'Resolved'
+    | 'Additional Info Required';
+
+type TicketPriority = 'Low' | 'Medium' | 'High';
+
 export type Ticket = {
     title: string;
     description: string;
     assignee: number;
-    type:
-        | 'Bugs/Errors'
-        | 'Feature Request'
-        | 'Other Comments'
-        | 'Training/Document Requests';
-    status:
-        | 'New'
-        | 'Open'
-        | 'In Progress'
-        | 'Review'
-        | 'Resolved'
-        | 'Additional Info Required';
-    priority: 'Low' | 'Medium' | 'High';
+    type: TicketType;
+    status: TicketStatus;
+    priority: TicketPriority;
     project: number;
     timestamp: string;
     creator: number;
@@ -80,3 +86,5 @@ export type AppState = {
     ) => void;
     getUsersArray: () => User[];
 };
+
+export type RouteModel = 'user' | 'project' | 'ticket' | 'comment';

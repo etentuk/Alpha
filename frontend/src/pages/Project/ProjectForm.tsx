@@ -18,7 +18,7 @@ const ProjectForm: FC<ProjectFormProps> = ({ page }) => {
     const pId = parseInt(id!, 10);
 
     if (!projects[pId] && page === 'Edit') {
-        location.href = '/error/404';
+        location.href = '/error';
     }
 
     const { TextArea } = Input;
@@ -86,7 +86,16 @@ const ProjectForm: FC<ProjectFormProps> = ({ page }) => {
             layout="vertical"
         >
             <Title>{page} Project</Title>
-            <Form.Item name="name" label="Project Name">
+            <Form.Item
+                name="name"
+                label="Project Name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please Provide a Project Name!',
+                    },
+                ]}
+            >
                 <Input placeholder="What are you working on?" />
             </Form.Item>
             <Form.Item name="description" label="Project Description">

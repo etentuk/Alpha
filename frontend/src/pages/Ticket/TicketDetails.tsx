@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Card, message, Space, Spin, Timeline, Typography } from 'antd';
+import { Button, Card, message, Space, Timeline, Typography } from 'antd';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
 import { deleteObject } from '../../api/dataReqs';
@@ -56,85 +56,39 @@ const TicketDetails = () => {
 
             <div className={styles.ticketDetailsBody}>
                 <div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <div style={{ width: '45%', padding: '20px' }}>
+                    <div className={styles.ticketDetailsRow}>
+                        <div className={styles.ticketDetailsTextLeft}>
                             <Title level={3}>Ticket Description</Title>
                             <Text>{ticket.description}</Text>
                         </div>
-                        <div
-                            style={{
-                                width: '45%',
-                                textAlign: 'left',
-                                padding: '20px',
-                            }}
-                        >
+                        <div className={styles.ticketDetailsTextRight}>
                             <Title level={3}>Ticket Type</Title>
                             <Text>{ticket.type}</Text>
                         </div>
                     </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <div style={{ width: '45%', padding: '20px' }}>
+                    <div className={styles.ticketDetailsRow}>
+                        <div className={styles.ticketDetailsTextLeft}>
                             <Title level={3}>Assigned To</Title>
                             <Text>{assignee}</Text>
                         </div>
-                        <div
-                            style={{
-                                width: '45%',
-                                textAlign: 'left',
-                                padding: '20px',
-                            }}
-                        >
+                        <div className={styles.ticketDetailsTextRight}>
                             <Title level={3}>Ticket Priority</Title>
                             <Text>{ticket.priority}</Text>
                         </div>
                     </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            textAlign: 'left',
-                        }}
-                    >
-                        <div style={{ width: '45%', padding: '20px' }}>
+                    <div className={styles.ticketDetailsRow}>
+                        <div className={styles.ticketDetailsTextLeft}>
                             <Title level={3}>Ticket Status</Title>
                             <Text>{ticket.status}</Text>
                         </div>
-                        <div
-                            style={{
-                                width: '45%',
-                                textAlign: 'left',
-                                padding: '20px',
-                            }}
-                        >
+                        <div className={styles.ticketDetailsTextRight}>
                             <Title level={3}>Date Created</Title>
                             <Text>
                                 {new Date(ticket.timestamp).toUTCString()}
                             </Text>
                         </div>
                     </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            textAlign: 'left',
-                            padding: '20px',
-                            maxHeight: '60vh',
-                        }}
-                    >
+                    <div className={styles.ticketExtras}>
                         <div style={{ width: '45%' }}>
                             <TicketCommentComponent ticketID={ticket.id} />
                         </div>

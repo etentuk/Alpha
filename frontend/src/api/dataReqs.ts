@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { UserRole } from '../entities/types';
-
-type RouteModel = 'user' | 'project' | 'ticket' | 'comment';
+import { RouteModel, UserRole } from '../entities/types';
+import { DB_API } from '../entities/constants';
 
 export const getDataList = async (model: RouteModel): Promise<any[]> => {
     try {
@@ -18,7 +17,7 @@ export const deleteObject = async (
     id: number,
 ): Promise<boolean> => {
     try {
-        await axios.delete(`http://127.0.0.1:8000/api/${model}/${id}/`);
+        await axios.delete(`${DB_API}${model}/${id}/`);
         return true;
     } catch (e) {
         console.log(e);
@@ -31,12 +30,9 @@ export const createObject = async (
     formData: any,
 ): Promise<any> => {
     try {
-        const { data } = await axios.post(
-            `http://127.0.0.1:8000/api/${model}/`,
-            {
-                ...formData,
-            },
-        );
+        const { data } = await axios.post(`${DB_API}${model}/`, {
+            ...formData,
+        });
         return data;
     } catch (e) {
         console.log(e);
@@ -50,10 +46,9 @@ export const editObject = async (
     id: number,
 ): Promise<any> => {
     try {
-        const { data } = await axios.put(
-            `http://127.0.0.1:8000/api/${model}/${id}/`,
-            { ...formData },
-        );
+        const { data } = await axios.put(`${DB_API}${model}/${id}/`, {
+            ...formData,
+        });
         return data;
     } catch (e) {
         console.log(e);
@@ -66,10 +61,9 @@ export const manageRole = async (formData: {
     users: string[];
 }) => {
     try {
-        const { data } = await axios.put(
-            'http://127.0.0.1:8000/api/change_roles',
-            { ...formData },
-        );
+        const { data } = await axios.put(`${DB_API}change_roles`, {
+            ...formData,
+        });
         return data;
     } catch (e) {
         console.log(e);

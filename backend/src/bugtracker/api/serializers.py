@@ -11,20 +11,22 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 
 from dj_rest_auth.serializers import PasswordResetSerializer
 
+from dotenv import dotenv_values
+
+
+config = dotenv_values('.env')
+
 
 class MyPasswordResetSerializer(PasswordResetSerializer):
     #
     def save(self):
         request = self.context.get('request')
-        request.META['HTTP_HOST'] = 'localhost:3000'
+        request.META['HTTP_HOST'] = config["FRONTEND_HTTP_HOST"]
         # Set some values to trigger the send_email method.
         opts = {
             'use_https': request.is_secure(),
             'from_email': 'example@yourdomain.com',
             'request': request,
-            # here I have set my desired template to be used
-            # don't forget to add your templates directory in settings to be found
-            'html_email_template_name': 'account/password_reset_from_key.html'
         }
 
         opts.update(self.get_email_options())
@@ -37,7 +39,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     @transaction.atomic
     def save(self, request):
         user = super().save(request)
-        user.username = self.data.get('username')
         user.role = 'SUBMITTER'
         user.save()
         return user

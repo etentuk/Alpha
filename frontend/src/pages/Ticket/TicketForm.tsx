@@ -1,11 +1,16 @@
 import React, { FC } from 'react';
 import Title from 'antd/es/typography/Title';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, message, Select } from 'antd';
 import { view } from '@risingstack/react-easy-state';
 import { useNavigate, useParams } from 'react-router-dom';
 import appState from '../../store';
 import { createObject, editObject } from '../../api/dataReqs';
 import { Ticket } from '../../entities/types';
+import {
+    ticketPriority,
+    ticketStatus,
+    ticketType,
+} from '../../entities/constants';
 
 interface TicketFormProps {
     page: 'Create' | 'Edit';
@@ -19,7 +24,7 @@ const TicketForm: FC<TicketFormProps> = ({ page }) => {
 
     const tId = parseInt(id!, 10);
     if (!tickets[tId] && page === 'Edit') {
-        location.href = '/error/404';
+        location.href = '/error';
     }
 
     let ticket: Partial<Ticket> = {
@@ -32,28 +37,10 @@ const TicketForm: FC<TicketFormProps> = ({ page }) => {
 
     const { TextArea } = Input;
 
-    const types = [
-        'Bugs/Errors',
-        'Feature Request',
-        'Other Comments',
-        'Training/Document Requests',
-    ];
-
-    const statuses = [
-        'New',
-        'Open',
-        'In Progress',
-        'Review',
-        'Resolved',
-        'Additional Info Required',
-    ];
-
-    const priorities = ['Low', 'Medium', 'High'];
-
     const selectInputs = [
-        { name: 'type', values: types },
-        { name: 'status', values: statuses },
-        { name: 'priority', values: priorities },
+        { name: 'type', values: ticketType },
+        { name: 'status', values: ticketStatus },
+        { name: 'priority', values: ticketPriority },
     ];
 
     const { Option } = Select;
@@ -95,7 +82,7 @@ const TicketForm: FC<TicketFormProps> = ({ page }) => {
                 })
                 .catch((e) => {
                     console.log(e);
-                    // navigate('error');
+                    message.error('Error Saving Ticket!').then(null);
                 });
         } else if (page === 'Edit') {
             editObject('ticket', { ...ticket, ...values }, ticket.id as number)
@@ -105,7 +92,7 @@ const TicketForm: FC<TicketFormProps> = ({ page }) => {
                 })
                 .catch((e) => {
                     console.log(e);
-                    // navigate('error');
+                    message.error('Error Saving Ticket!').then(null);
                 });
         }
     };
@@ -120,11 +107,20 @@ const TicketForm: FC<TicketFormProps> = ({ page }) => {
                 initialValues={ticket}
                 layout="vertical"
             >
-                <Form.Item name="title" label="Ticket Title">
+                <Form.Item
+                    name="title"
+                    label="Ticket Title"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please provide a ticket Title!',
+                        },
+                    ]}
+                >
                     <Input placeholder="Name of Ticket" />
                 </Form.Item>
                 <Form.Item name="description" label="Ticket Description">
-                    <TextArea placeholder="Describe your project" />
+                    <TextArea placeholder="Describe your Ticket" />
                 </Form.Item>
                 <Form.Item name="assignee" label="Assignee">
                     <Select

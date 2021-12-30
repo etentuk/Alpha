@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { message } from 'antd';
 import appState from '../store';
+import { DB_AUTH } from '../entities/constants';
 
 const { resetUser, setToken } = appState;
 
@@ -13,9 +14,34 @@ const authSuccess = (key: string) => {
 
 export const resetPassword = async (email: string) => {
     try {
-        await axios.post('http://127.0.0.1:8000/dj-rest-auth/password/reset/', {
+        await axios.post(`${DB_AUTH}password/reset/`, {
             email,
         });
+        return 'success';
+    } catch (e: any) {
+        return e.response.data;
+    }
+};
+
+export const authPost = async (formData: any, url: string) => {
+    try {
+        await axios.post(`${DB_AUTH}${url}`, {
+            ...formData,
+        });
+        return 'success';
+    } catch (e: any) {
+        return Error(e.response.data);
+    }
+};
+
+export const authPostKeyReturn = async (formData: any, url: string) => {
+    try {
+        const {
+            data: { key },
+        } = await axios.post(`${DB_AUTH}${url}`, {
+            ...formData,
+        });
+        authSuccess(key);
         return 'success';
     } catch (e: any) {
         return e.response.data;
@@ -29,61 +55,27 @@ export const passwordResetConfirm = async (formData: {
     token: string;
 }) => {
     try {
-        await axios.post(
-            'http://127.0.0.1:8000/dj-rest-auth/password/reset/confirm/',
-            {
-                ...formData,
-            },
-        );
+        await axios.post(`${DB_AUTH}password/reset/confirm/`, {
+            ...formData,
+        });
         return 'success';
     } catch (e: any) {
         return e.response.data;
     }
 };
 
-export const loginUser = async (username: string, password: string) => {
-    try {
-        const {
-            data: { key },
-        } = await axios.post('http://127.0.0.1:8000/dj-rest-auth/login/', {
-            username,
-            password,
-        });
-        authSuccess(key);
-        return true;
-    } catch (e) {
-        console.log('loginUser Error', e);
-        return false;
-    }
-};
-
 export const logoutUser = async () => {
     try {
+        appState.isLoaded = false;
         resetUser();
         localStorage.removeItem('token');
         localStorage.removeItem('expirationDate');
         setToken('');
-        await axios.post('http://127.0.0.1:8000/dj-rest-auth/logout/');
+        await axios.post(`${DB_AUTH}logout/`);
+        appState.isLoaded = true;
     } catch (e) {
+        message.error('Error Logging Out, Refresh and try again');
         console.log('logoutUser Error', e);
-    }
-};
-
-export const registerUser = async (formData: any) => {
-    try {
-        const {
-            data: { key },
-        } = await axios.post(
-            'http://127.0.0.1:8000/dj-rest-auth/registration/',
-            {
-                ...formData,
-            },
-        );
-        authSuccess(key);
-        return 'successful';
-    } catch (e: any) {
-        console.log('Register User Error', e);
-        return e.response.data;
     }
 };
 

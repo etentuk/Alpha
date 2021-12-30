@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { getDataList } from './api/dataReqs';
 import appState from './store';
 import { loggedInUser, logoutUser } from './api/Authentication';
@@ -20,6 +21,7 @@ const getModels = async (): Promise<boolean> => {
 
 export const checkAuthTimeout = (expirationTime: number) => {
     setTimeout(async () => {
+        message.error('Token Expired');
         await logoutUser();
     }, expirationTime * 1000);
 };

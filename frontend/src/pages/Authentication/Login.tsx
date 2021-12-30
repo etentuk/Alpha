@@ -3,14 +3,20 @@ import { Alert, Button, Form, Input, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import AuthContainer from './AuthContainer';
-import { loginUser } from '../../api/Authentication';
+import { authPostKeyReturn } from '../../api/Authentication';
 
 const Login: FC = () => {
     const [alert, setAlert] = useState(false);
     const navigate = useNavigate();
-    const onSubmit = async (values: { username: string; password: string }) => {
-        const loginSuccess = await loginUser(values.username, values.password);
-        if (loginSuccess) {
+    const onSubmit = async (values: {
+        username: string;
+        password: string;
+    }): Promise<any> => {
+        const loginSuccess = await authPostKeyReturn(
+            { username: values.username, password: values.password },
+            'login/',
+        );
+        if (loginSuccess === 'success') {
             return navigate('/');
         }
         setAlert(true);

@@ -9,15 +9,21 @@ import styles from './project.module.css';
 
 const ProjectDetails: FC = () => {
     const navigate = useNavigate();
-    const { getUsersArray, projects, delObject, getProjectTickets, users } =
-        appState;
+    const {
+        getUsersArray,
+        projects,
+        delObject,
+        getProjectTickets,
+        users,
+        user,
+    } = appState;
 
     const { id } = useParams();
 
     const pId = parseInt(id!, 10);
 
     if (!projects[pId]) {
-        location.href = '/error/404';
+        location.href = '/error';
     }
 
     const { Title, Text } = Typography;
@@ -89,9 +95,13 @@ const ProjectDetails: FC = () => {
                     <Button>
                         <Link to={`../../ticket/${record.id}`}>Details</Link>
                     </Button>
-                    <Button>
-                        <Link to={`../../ticket/edit/${record.id}`}>Edit </Link>
-                    </Button>
+                    {user.user_permissions.includes('change_ticket') ? (
+                        <Button>
+                            <Link to={`../../ticket/edit/${record.id}`}>
+                                Edit Ticket
+                            </Link>
+                        </Button>
+                    ) : null}
                 </Space>
             ),
         },
@@ -109,16 +119,24 @@ const ProjectDetails: FC = () => {
                             Add Ticket
                         </Link>
                     </Button>
-                    <Button>
-                        <Link to={`../edit/${project.id}`}>Edit</Link>
-                    </Button>
-                    <Popconfirm
-                        placement="topRight"
-                        onConfirm={() => deleteProject(project.id)}
-                        title="Deleting This Project Will Also Delete All Tickets related to it. Are you sure you want to Continue?"
-                    >
-                        <Button danger>Delete</Button>
-                    </Popconfirm>
+                    {user.user_permissions.includes(
+                        'bugtracker.change_project',
+                    ) ? (
+                        <Button>
+                            <Link to={`../edit/${project.id}`}>Edit</Link>
+                        </Button>
+                    ) : null}
+                    {user.user_permissions.includes(
+                        'bugtracker.delete_project',
+                    ) ? (
+                        <Popconfirm
+                            placement="topRight"
+                            onConfirm={() => deleteProject(project.id)}
+                            title="Deleting This Project Will Also Delete All Tickets related to it. Are you sure you want to Continue?"
+                        >
+                            <Button danger>Delete</Button>
+                        </Popconfirm>
+                    ) : null}
                 </Space>
             </div>
 

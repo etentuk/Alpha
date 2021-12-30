@@ -34,24 +34,18 @@ const UserProfile: FC = () => {
         old_password: string;
     }) => {
         setSaving(true);
-        try {
-            const res = await setPassword({ ...values });
-            if (res === 'success') {
-                message.success('Successfully Changed Password!');
-                setPasswordChange(false);
-            } else {
-                setPasswordError({
-                    message: res.message,
-                    visible: true,
-                });
-            }
-            editForm.resetFields();
-            setSaving(false);
-        } catch (e: any) {
-            console.log(e.response.data);
-
-            setSaving(false);
+        const res = await setPassword({ ...values });
+        if (res === 'success') {
+            message.success('Successfully Changed Password!');
+            setPasswordChange(false);
+        } else {
+            setPasswordError({
+                message: Object.values(res).join(' '),
+                visible: true,
+            });
         }
+        editForm.resetFields();
+        setSaving(false);
     };
 
     const cancelEdit = () => {

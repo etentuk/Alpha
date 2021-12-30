@@ -13,6 +13,13 @@ import os
 
 from pathlib import Path
 
+
+from dotenv import dotenv_values
+
+
+config = dotenv_values('.env')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hce6oo=@uevi#yxg6@qp!$g0rj$)lnm#ld^4fgk6xui(tmw+^0'
+SECRET_KEY = config["SECRET_KEY"]
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config["DEBUG"]
 
-print(os.path.join(BASE_DIR, 'bugtracker/templates'))
 
 ALLOWED_HOSTS = []
 
@@ -92,17 +99,9 @@ TEMPLATES = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = [
-#     # allauth specific authentication methods, such as login by e-mail
-#     'allauth.account.auth_backends.AuthenticationBackend',
-#     # Needed to login by username in Django admin, regardless of allauth
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+ACCOUNT_EMAIL_VERIFICATION = config["ACCOUNT_EMAIL_VERIFICATION"]
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-
-ACCOUNT_EMAIL_REQUIRED = True
-
+ACCOUNT_EMAIL_REQUIRED = config["ACCOUNT_EMAIL_REQUIRED"]
 
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
@@ -161,14 +160,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'etentukcodes@gmail.com'
-EMAIL_HOST_PASSWORD = 'Productivity20'
-EMAIL_PORT = 587
+EMAIL_BACKEND = config["EMAIL_BACKEND"]
+EMAIL_USE_TLS = config["EMAIL_USE_TLS"]
+EMAIL_HOST = config["EMAIL_HOST"]
+EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = config["EMAIL_PORT"]
 
-CUSTOM_PASSWORD_RESET_CONFIRM = 'http://localhost:3000/password-reset/'
 
 ##CORSHEADERS
 CORS_ALLOW_ALL_ORIGINS = True

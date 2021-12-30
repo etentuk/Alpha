@@ -2,49 +2,42 @@ import React, { FC, useState } from 'react';
 import { Alert, Button, Form, Input, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContainer from './AuthContainer';
-import { registerUser } from '../../api/Authentication';
-
-type Registration = {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
-};
+import { authPostKeyReturn } from '../../api/Authentication';
 
 const Register: FC = () => {
     const navigate = useNavigate();
     const { Title, Text } = Typography;
-    const [usernameAlert, setUsernameAlert] = useState({
-        visible: false,
-        message: '',
-    });
-    const [passwordAlert, setPasswordAlert] = useState({
-        visible: false,
-        message: '',
-    });
-    const [emailAlert, setEmailAlert] = useState({
+    const [errorAlert, setErrorAlert] = useState({
         visible: false,
         message: '',
     });
 
-    const submit = async (values: Registration) => {
-        const res: any = await registerUser(values);
-        if (res === 'successful') navigate('/');
-        if (res.username) {
-            setUsernameAlert({ visible: true, message: res.username });
+    const submit = async (values: any): Promise<any> => {
+        const res = await authPostKeyReturn(values, 'registration/');
+        if (res === 'success') {
+            return navigate('/');
         }
-        if (res.password1) {
-            setPasswordAlert({ visible: true, message: res.password1 });
-        }
-        if (res.email) {
-            setEmailAlert({ visible: true, message: res.email });
-        }
+        setErrorAlert({
+            visible: true,
+            message: Object.values(res).join(' '),
+        });
     };
 
     return (
         <AuthContainer>
             <Form name="register" onFinish={submit}>
                 <Title>Create An Account</Title>
+                {errorAlert.visible && (
+                    <Alert
+                        message={errorAlert.message}
+                        type="error"
+                        closable
+                        onClick={() => {
+                            setErrorAlert({ visible: false, message: '' });
+                        }}
+                        style={{ marginBottom: '10px' }}
+                    />
+                )}
                 <Form.Item
                     label="First Name"
                     rules={[
@@ -69,17 +62,7 @@ const Register: FC = () => {
                 >
                     <Input />
                 </Form.Item>
-                {usernameAlert.visible && (
-                    <Alert
-                        message={usernameAlert.message}
-                        type="error"
-                        closable
-                        onClick={() => {
-                            setUsernameAlert({ visible: false, message: '' });
-                        }}
-                        style={{ marginBottom: '10px' }}
-                    />
-                )}
+
                 <Form.Item
                     label="Username"
                     rules={[
@@ -92,17 +75,6 @@ const Register: FC = () => {
                 >
                     <Input />
                 </Form.Item>
-                {emailAlert.visible && (
-                    <Alert
-                        message={emailAlert.message}
-                        type="error"
-                        closable
-                        onClick={() => {
-                            setEmailAlert({ visible: false, message: '' });
-                        }}
-                        style={{ marginBottom: '10px' }}
-                    />
-                )}
                 <Form.Item
                     label="Email Address"
                     rules={[
@@ -115,17 +87,6 @@ const Register: FC = () => {
                 >
                     <Input type="email" />
                 </Form.Item>
-                {passwordAlert.visible && (
-                    <Alert
-                        message={passwordAlert.message}
-                        type="error"
-                        closable
-                        onClick={() => {
-                            setPasswordAlert({ visible: false, message: '' });
-                        }}
-                        style={{ marginBottom: '10px' }}
-                    />
-                )}
                 <Form.Item
                     label="Password"
                     name="password1"

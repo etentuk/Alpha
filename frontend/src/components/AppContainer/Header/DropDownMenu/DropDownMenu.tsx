@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Dropdown, Button, Typography, Space } from 'antd';
+import { Menu, Dropdown, Button } from 'antd';
 import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { view } from '@risingstack/react-easy-state';
 import { logoutUser } from '../../../../api/Authentication';
@@ -8,17 +8,14 @@ import appState from '../../../../store';
 
 const DropdownMenu: FC = () => {
     const navigate = useNavigate();
-    const { Text } = Typography;
 
     const {
         user: { username, role },
     } = appState;
 
     const logout = async (): Promise<void> => {
-        appState.isLoaded = false;
-        navigate('login');
         await logoutUser();
-        appState.isLoaded = true;
+        navigate('login');
     };
 
     const menu = (): ReactElement => (

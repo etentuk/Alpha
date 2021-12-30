@@ -33,7 +33,7 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
             message.success('Successfully Deleted Comment');
         } catch (e) {
             console.log(e);
-            message.error('Deleting Failed, Try Again');
+            message.error('Deleting Failed, Refresh and Try Again');
         }
     };
 
@@ -95,7 +95,7 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
             key: 'action',
             render: (text: string, record: TicketComment) => (
                 <Space>
-                    {user.role === 'ADMIN' || user.id === record.commenter ? (
+                    {user.id === record.commenter || user.role === 'ADMIN' ? (
                         <>
                             <Button
                                 onClick={() =>
@@ -147,7 +147,7 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please select a Role',
+                            message: 'Please Leave a Comment!',
                         },
                     ]}
                 >
