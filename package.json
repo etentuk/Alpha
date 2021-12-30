@@ -45,5 +45,9 @@
   "devDependencies": {
     "@types/lodash": "^4.14.178",
     "prettier": "2.5.1"
+  },
+  "engines": {
+    "node": "17.2.0",
+    "npm": "8.1.4"
   }
 }
