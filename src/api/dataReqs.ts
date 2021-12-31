@@ -4,7 +4,7 @@ import { DB_API } from '../entities/constants';
 
 export const getDataList = async (model: RouteModel): Promise<any[]> => {
     try {
-        const { data } = await axios.get(`${DB_API}${model}`);
+        const { data } = await axios.get(`${DB_API}${model}/`);
         return data;
     } catch (e) {
         console.log(e);
