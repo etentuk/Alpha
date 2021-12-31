@@ -50,5 +50,6 @@
   "engines": {
     "node": "17.2.0",
     "npm": "8.1.4"
-  }
+  },
+  "homepage": "https://alpha-bugtracker.herokuapp.com/"
 }
