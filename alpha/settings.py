@@ -15,10 +15,12 @@ import os
 from pathlib import Path
 
 
-from dotenv import dotenv_values
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-config = dotenv_values('.env')
+# config = dotenv_values('.env')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +39,7 @@ DEBUG = os.environ.get("DEBUG")
 
 
 ALLOWED_HOSTS = ['alpha-bugtracker.herokuapp.com',
-                 '127.0.0.1:8000', 'localhost']
+                 '127.0.0.1', 'localhost']
 
 
 # Application definition
