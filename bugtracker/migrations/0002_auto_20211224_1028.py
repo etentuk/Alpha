@@ -41,19 +41,19 @@ def create_groups(apps, schema_migration):
     submitter.permissions.add(
         ticket_permissions[0], ticket_permissions[1], project_permissions[0])
 
-    demo_admin = User.objects.create_user('DEMO_ADMIN', 'demo_admin@example.com',
+    demo_admin = User.objects.create_user('demo_admin', 'demo_admin@example.com',
                                           os.environ.get('REACT_APP_DEMO_ADMIN_PASSWORD'))
     demo_admin.role = 'ADMIN'
     demo_admin.save()
-    demo_project_manager = User.objects.create_user('DEMO_PROJECT_MANAGER', 'demo_project_manager@example.com',
+    demo_project_manager = User.objects.create_user('demo_project_manager', 'demo_project_manager@example.com',
                                                     os.environ.get('REACT_APP_DEMO_PROJECT_MANAGER_PASSWORD'))
     demo_project_manager.role = 'PROJECT_MANAGER'
     demo_project_manager.save()
-    demo_developer = User.objects.create_user('DEMO_DEVELOPER', 'demo_developer@example.com',
+    demo_developer = User.objects.create_user('demo_developer', 'demo_developer@example.com',
                                               os.environ.get('REACT_APP_DEMO_DEVELOPER_PASSWORD'))
     demo_developer.role = 'DEVELOPER'
     demo_developer.save()
-    demo_submitter = User.objects.create_user('DEMO_SUBMITTER', 'demo_submitter@example.com',
+    demo_submitter = User.objects.create_user('demo_submitter', 'demo_submitter@example.com',
                                               os.environ.get('REACT_APP_DEMO_SUBMITTER_PASSWORD'))
     demo_submitter.role = 'SUBMITTER'
     demo_submitter.save()

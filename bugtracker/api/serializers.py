@@ -3,18 +3,13 @@ from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from ..models import User, Project, Ticket, Comment
 from dj_rest_auth.registration.serializers import RegisterSerializer
-from dj_rest_auth.serializers import PasswordResetSerializer, PasswordChangeSerializer
-
-
-class MyPasswordChangeSerializer(PasswordChangeSerializer):
-    pass
+from dj_rest_auth.serializers import PasswordResetSerializer
 
 
 class MyPasswordResetSerializer(PasswordResetSerializer):
     #
     def save(self):
         request = self.context.get('request')
-        request.META['HTTP_HOST'] = 'localhost:3000'
         # Set some values to trigger the send_email method.
         opts = {
             'use_https': request.is_secure(),

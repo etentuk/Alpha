@@ -19,7 +19,7 @@ const Demo_login: FC = () => {
     const onSubmit = async (): Promise<any> => {
         const loginSuccess = await authPostKeyReturn(
             {
-                username: `DEMO_${demoUser}`,
+                username: `demo_${demoUser.toLowerCase()}`,
                 password: process.env[`REACT_APP_DEMO_${demoUser}_PASSWORD`],
             },
             'login/',
