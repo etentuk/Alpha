@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { message } from 'antd';
 import appState from '../store';
-import { DB_AUTH } from '../entities/constants';
+import { DB_API, DB_AUTH } from '../entities/constants';
 
 const { resetUser, setToken } = appState;
 
@@ -82,7 +82,7 @@ export const logoutUser = async () => {
 export const loggedInUser = async (): Promise<any> => {
     try {
         const { data } = await axios.get(
-            'http://127.0.0.1:8000/api/logged_in_user',
+            `${DB_API}logged_in_user`,
         );
         return data;
     } catch (e) {
@@ -100,7 +100,7 @@ export const setPassword = async (formData: {
 }) => {
     try {
         await axios.post(
-            'http://127.0.0.1:8000/dj-rest-auth/password/change/',
+            `${DB_AUTH}password/change/`,
             { ...formData },
         );
         return 'success';

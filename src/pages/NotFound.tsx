@@ -8,20 +8,12 @@ const NotFound: FC = () => {
 
     return (
         <Result
-            status={token ? '404' : '403'}
-            title={token ? '404' : '403'}
-            subTitle={
-                token
-                    ? 'Sorry, the page you visited does not exist.'
-                    : 'Please login or create an account to access this site!'
-            }
+            status={'404'}
+            title={'404'}
+            subTitle={'Sorry, the page you visited does not exist.'}
             extra={
                 <Button>
-                    {token ? (
-                        <Link to="/">Return Home</Link>
-                    ) : (
-                        <Link to="/login">Login</Link>
-                    )}
+                    <Link to="/">Return Home</Link>
                 </Button>
             }
         />

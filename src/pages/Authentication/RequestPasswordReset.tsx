@@ -37,8 +37,9 @@ const RequestPasswordReset: FC = () => {
                             type="primary"
                             htmlType="submit"
                             disabled={saving}
+                            loading={saving}
                         >
-                            {saving ? <Spin /> : 'Reset Password'}
+                            Reset Password
                         </Button>
                     </Form.Item>
                 </Form>

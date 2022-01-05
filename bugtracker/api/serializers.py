@@ -1,27 +1,15 @@
-from abc import ABC
-
 from django.db import transaction
 from rest_framework import serializers
-
 from django.core.exceptions import ObjectDoesNotExist
-
 from ..models import User, Project, Ticket, Comment
-
 from dj_rest_auth.registration.serializers import RegisterSerializer
-
 from dj_rest_auth.serializers import PasswordResetSerializer
-
-from dotenv import dotenv_values
-
-
-config = dotenv_values('.env')
 
 
 class MyPasswordResetSerializer(PasswordResetSerializer):
     #
     def save(self):
         request = self.context.get('request')
-        request.META['HTTP_HOST'] = config["FRONTEND_HTTP_HOST"]
         # Set some values to trigger the send_email method.
         opts = {
             'use_https': request.is_secure(),
@@ -38,6 +26,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     # Define transaction.atomic to rollback the save operation in case of error
     @transaction.atomic
     def save(self, request):
+        request.POST["username"] = request.POST["username"].lower()
         user = super().save(request)
         user.role = 'SUBMITTER'
         user.save()
@@ -61,7 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def validate_role(self, value):
-        if value in ['ADMIN', 'PROJECT_MANAGER' , 'SUBMITTER', 'DEVELOPER']:
+        if value in ['ADMIN', 'PROJECT_MANAGER', 'SUBMITTER', 'DEVELOPER']:
             return value
         raise serializers.ValidationError('Invalid Role Assignment')
 

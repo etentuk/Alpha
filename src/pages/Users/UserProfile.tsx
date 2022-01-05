@@ -13,6 +13,7 @@ import {
 import { useForm } from 'antd/es/form/Form';
 import appState from '../../store';
 import { setPassword } from '../../api/Authentication';
+import { demoUsers } from '../../entities/constants';
 
 const UserProfile: FC = () => {
     const { user } = appState;
@@ -60,9 +61,11 @@ const UserProfile: FC = () => {
                 bordered
                 layout="vertical"
                 extra={
-                    <Button onClick={() => setPasswordChange(true)}>
-                        Change Password
-                    </Button>
+                    !demoUsers.includes(user.username) ? (
+                        <Button onClick={() => setPasswordChange(true)}>
+                            Change Password
+                        </Button>
+                    ) : null
                 }
             >
                 <Item label="Username">{user.username}</Item>

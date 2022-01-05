@@ -10,32 +10,33 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import dj_database_url
 
 from pathlib import Path
 
 
-from dotenv import dotenv_values
-
-
-config = dotenv_values('.env')
-
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config["SECRET_KEY"]
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config["DEBUG"]
+DEBUG = os.environ.get("DEBUG")
 
 
-ALLOWED_HOSTS = ['alpha-bugtracker.herokuapp.com']
+ALLOWED_HOSTS = ['quinta.herokuapp.com',
+                 '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -71,8 +72,9 @@ SITE_ID = 1
 
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,7 +88,7 @@ ROOT_URLCONF = 'alpha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'bugtracker/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,9 +101,9 @@ TEMPLATES = [
     },
 ]
 
-ACCOUNT_EMAIL_VERIFICATION = config["ACCOUNT_EMAIL_VERIFICATION"]
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION")
 
-ACCOUNT_EMAIL_REQUIRED = config["ACCOUNT_EMAIL_REQUIRED"]
+ACCOUNT_EMAIL_REQUIRED = os.environ.get("ACCOUNT_EMAIL_REQUIRED")
 
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
@@ -110,12 +112,7 @@ WSGI_APPLICATION = 'alpha.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
 
 AUTH_USER_MODEL = "bugtracker.User"
 
@@ -153,36 +150,36 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = config["EMAIL_BACKEND"]
-EMAIL_USE_TLS = config["EMAIL_USE_TLS"]
-EMAIL_HOST = config["EMAIL_HOST"]
-EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
-EMAIL_PORT = config["EMAIL_PORT"]
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
 
 
-##CORSHEADERS
+# CORSHEADERS
 CORS_ALLOW_ALL_ORIGINS = True
 
-## REST FRAMEWORK
+# REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-       'rest_framework.authentication.TokenAuthentication',
-       'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+LOGIN_URL = '/login'
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'bugtracker.api.serializers.CustomRegisterSerializer',
@@ -191,3 +188,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER': 'bugtracker.api.serializers.MyPasswordResetSerializer'
 }
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static')
+]

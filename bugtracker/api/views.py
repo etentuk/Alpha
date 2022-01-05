@@ -3,9 +3,27 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import BasePermission, DjangoModelPermissions
-
+from django.views import View
+from django.http import HttpResponse, HttpResponseNotFound
+import os
 from .serializers import UserSerializer, ProjectSerializer, TicketSerializer, CommentSerializer
 from ..models import User, Project, Ticket, Comment
+from dj_rest_auth.views import PasswordChangeView
+from django.conf import settings
+
+
+class IsNotDemoUser(BasePermission):
+
+    def has_permission(self, request, view):
+        demo_users = ['DEMO_ADMIN', 'DEMO_PROJECT_MANAGER', 'DEMO_DEVELOPER', 'DEMO_SUBMITTER']
+        if request.user.username in demo_users:
+            return False
+        else:
+            return True
+
+
+class MyPasswordChangeView(PasswordChangeView):
+    permission_classes = [IsNotDemoUser]
 
 
 class GetLoggedInUserView(APIView):
@@ -90,7 +108,7 @@ class TicketViewSet(viewsets.ModelViewSet):
 
         if user.role == 'ADMIN':
             return Ticket.objects.all().order_by('-timestamp')
-        elif user.role == 'PROJECT_MANAGER' or 'DEVELOPER' or user.role == 'SUBMITTER':
+        elif user.role == 'PROJECT_MANAGER' or user.role == 'DEVELOPER' or user.role == 'SUBMITTER':
             user_tickets = tickets | Ticket.objects.filter(Q(creator=user) | Q(assignee=user))
             return user_tickets.distinct().order_by('-timestamp')
         else:
@@ -132,3 +150,15 @@ class CommentViewSet(viewsets.ModelViewSet):
             new_comment.save()
 
             return Response(CommentSerializer(new_comment).data, status=200)
+
+
+class Assets(View):
+
+    def get(self, _request, filename):
+        path = os.path.join(os.path.dirname(__file__), 'static', filename)
+
+        if os.path.isfile(path):
+            with open(path, 'rb') as file:
+                return HttpResponse(file.read(), content_type='application/javascript')
+        else:
+            return HttpResponseNotFound()
