@@ -4,8 +4,11 @@ import { Col } from 'antd';
 import cloneDeep from 'lodash/cloneDeep';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
+import { demoUsers } from '../../entities/constants';
 
 const Dashboard = () => {
+    console.log(demoUsers);
+
     const { tickets, projects } = appState;
     const status: Record<string, any> = {
         New: {

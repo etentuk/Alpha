@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios';
@@ -89,6 +89,9 @@ const AppRoutes: FC = () => {
                         />
                     ) : null}
                     <Route path="profile" element={<UserProfile />} />
+                    <Route path="/login" element={<Navigate to="/" />} />
+                    <Route path="/register" element={<Navigate to="/" />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             ) : (
                 <>
@@ -102,9 +105,9 @@ const AppRoutes: FC = () => {
                         path="/password/reset/confirm/:uid/:token"
                         element={<PasswordReset />}
                     />
+                    <Route path="*" element={<Navigate to={'/login'} />} />
                 </>
             )}
-            <Route path="/*" element={<NotFound />} />
         </Routes>
     );
 };
