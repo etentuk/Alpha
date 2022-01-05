@@ -58,11 +58,11 @@ def create_groups(apps, schema_migration):
     demo_submitter.role = 'SUBMITTER'
     demo_submitter.save()
 
-    djangosite = apps.get_model('sites', 'Site')
-    site = djangosite.objects.get_or_create(id=1)
-    site.domain = 'www.quinta.herokuapp.com'
-    site.name = 'Quinta'
-    site.save()
+    # djangosite = apps.get_model('sites', 'Site')
+    # site = djangosite.objects.get_or_create(id=1)
+    # site.domain = 'www.quinta.herokuapp.com'
+    # site.name = 'Quinta'
+    # site.save()
 
     for user in User.objects.all():
         if user.role == 'ADMIN':
