@@ -8,7 +8,6 @@ import uuid
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
 class User(AbstractUser):
     ADMIN = 'ADMIN'
     PROJECT_MANAGER = 'PROJECT_MANAGER'
@@ -62,7 +61,6 @@ class Project(models.Model):
         User, related_name="assigned_projects", blank=True,)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    history = HistoricalRecords()
 
     class Meta:
         ordering = ['timestamp']

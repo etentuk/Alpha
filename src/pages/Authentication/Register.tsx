@@ -13,6 +13,7 @@ const Register: FC = () => {
     });
 
     const submit = async (values: any): Promise<any> => {
+        values.username = values.username.toLowerCase();
         const res = await authPostKeyReturn(values, 'registration/');
         if (res === 'success') {
             return navigate('/');
@@ -124,7 +125,7 @@ const Register: FC = () => {
                 </Form.Item>
                 <Text>
                     Got an Account?
-                    <Link to="../login">Login Here</Link>
+                    <Link to="../login"> Sign in Here</Link>
                 </Text>
             </Form>
         </AuthContainer>
