@@ -26,6 +26,8 @@ class MyPasswordChangeView(PasswordChangeView):
     permission_classes = [IsNotDemoUser]
 
 
+
+
 class GetLoggedInUserView(APIView):
     def get(self, request):
         user = UserSerializer(request.user)

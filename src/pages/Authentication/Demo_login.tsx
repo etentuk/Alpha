@@ -20,7 +20,7 @@ const Demo_login: FC = () => {
         const loginSuccess = await authPostKeyReturn(
             {
                 username: `demo_${demoUser.toLowerCase()}`,
-                password: process.env[`REACT_APP_DEMO_${demoUser}_PASSWORD`],
+                password: 'demo_password2',
             },
             'login/',
         );
