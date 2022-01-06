@@ -36,6 +36,7 @@ export const authPost = async (formData: any, url: string) => {
 
 export const authPostKeyReturn = async (formData: any, url: string) => {
     try {
+        console.log(`${DB_AUTH}${url}`);
         const {
             data: { key },
         } = await axios.post(`${DB_AUTH}${url}`, {
@@ -44,7 +45,8 @@ export const authPostKeyReturn = async (formData: any, url: string) => {
         authSuccess(key);
         return 'success';
     } catch (e: any) {
-        return e.response.data;
+        console.log(e);
+        return e;
     }
 };
 
@@ -81,9 +83,7 @@ export const logoutUser = async () => {
 
 export const loggedInUser = async (): Promise<any> => {
     try {
-        const { data } = await axios.get(
-            `${DB_API}logged_in_user`,
-        );
+        const { data } = await axios.get(`${DB_API}logged_in_user`);
         return data;
     } catch (e) {
         console.log(e);
@@ -99,10 +99,7 @@ export const setPassword = async (formData: {
     old_password: string;
 }) => {
     try {
-        await axios.post(
-            `${DB_AUTH}password/change/`,
-            { ...formData },
-        );
+        await axios.post(`${DB_AUTH}password/change/`, { ...formData });
         return 'success';
     } catch (e: any) {
         console.log('Change Password Error', e);
