@@ -102,7 +102,7 @@ const AppRoutes: FC = () => {
                         element={<RequestPasswordReset />}
                     />
                     <Route
-                        path="/password/reset/confirm/:uid/:token"
+                        path="/password/reset/confirm/:uid/:token/"
                         element={<PasswordReset />}
                     />
                     <Route path="*" element={<Navigate to={'/login'} />} />
