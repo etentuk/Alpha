@@ -121,6 +121,7 @@ WSGI_APPLICATION = 'alpha.wsgi.application'
 #     }
 # }
 
+#Postgres DB
 DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
 
 AUTH_USER_MODEL = "bugtracker.User"
