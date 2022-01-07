@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path(
-        'dj-rest-auth/password/reset/confirm/<slug:uidb64>/<slug:token>/',
+        'password/reset/confirm/<slug:uidb64>/<slug:token>/',
         PasswordResetConfirmView.as_view(), name='password_reset_confirm'
     ),
     path('dj-rest-auth/password/change/', MyPasswordChangeView.as_view(), name='password_change_view'),

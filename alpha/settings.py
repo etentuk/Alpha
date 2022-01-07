@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 import dj_database_url
-# import django_heroku
+import django_heroku
 
 
 from pathlib import Path
@@ -207,5 +207,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
