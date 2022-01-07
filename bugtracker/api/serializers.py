@@ -26,7 +26,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     # Define transaction.atomic to rollback the save operation in case of error
     @transaction.atomic
     def save(self, request):
-        request.POST["username"] = request.POST["username"].lower()
         user = super().save(request)
         user.role = 'SUBMITTER'
         user.save()
