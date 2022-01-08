@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 import dj_database_url
-import django_heroku
+# import django_heroku
 
 
 from pathlib import Path
@@ -90,7 +90,7 @@ ROOT_URLCONF = 'alpha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'build'), os.path.join(BASE_DIR)],
+        'DIRS': [os.path.join(BASE_DIR, 'build'), os.path.join(BASE_DIR, 'bugtracker/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -194,10 +194,10 @@ LOGIN_URL = '/login'
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'bugtracker.api.serializers.CustomRegisterSerializer',
 }
-
-REST_AUTH_SERIALIZERS = {
-    'PASSWORD_RESET_SERIALIZER': 'bugtracker.api.serializers.MyPasswordResetSerializer'
-}
+#
+# REST_AUTH_SERIALIZERS = {
+#     'PASSWORD_RESET_SERIALIZER': 'bugtracker.api.serializers.MyPasswordResetSerializer'
+# }
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -207,5 +207,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 

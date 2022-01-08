@@ -4,21 +4,70 @@ from django.core.exceptions import ObjectDoesNotExist
 from ..models import User, Project, Ticket, Comment
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import PasswordResetSerializer
+from dj_rest_auth.forms import AllAuthPasswordResetForm
+from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
 
 
-class MyPasswordResetSerializer(PasswordResetSerializer):
-    #
-    def save(self):
-        request = self.context.get('request')
-        # Set some values to trigger the send_email method.
-        opts = {
-            'use_https': request.is_secure(),
-            'from_email': 'example@yourdomain.com',
-            'request': request,
-        }
+# from allauth.account.utils import (filter_users_by_email, user_pk_to_url_str, user_username)
+# from allauth.utils import build_absolute_uri
+# from allauth.account.adapter import get_adapter
+# from allauth.account.forms import default_token_generator
+# from allauth.account import app_settings
 
-        opts.update(self.get_email_options())
-        self.reset_form.save(**opts)
+#
+# class CustomAllAuthPasswordResetForm(AllAuthPasswordResetForm):
+#
+#     def clean_email(self):
+#         """
+#         Invalid email should not raise error, as this would leak users
+#         for unit test: test_password_reset_with_invalid_email
+#         """
+#         email = self.cleaned_data["email"]
+#         email = get_adapter().clean_email(email)
+#         self.users = filter_users_by_email(email, is_active=True)
+#         return self.cleaned_data["email"]
+#
+#     def save(self, request, **kwargs):
+#         current_site = get_current_site(request)
+#         email = self.cleaned_data['email']
+#         token_generator = kwargs.get('token_generator', default_token_generator)
+#
+#         for user in self.users:
+#             temp_key = token_generator.make_token(user)
+#
+#             path = reverse(
+#                 "password_reset_confirm",
+#                 args=[user_pk_to_url_str(user), temp_key],
+#             )
+#             url = build_absolute_uri(request, path)
+#
+#             context = {
+#                 "current_site": current_site,
+#                 "user": user,
+#                 "password_reset_url": url,
+#                 "request": request,
+#                 "path": path,
+#             }
+#
+#             if app_settings.AUTHENTICATION_METHOD != app_settings.AuthenticationMethod.EMAIL:
+#                 context['username'] = user_username(user)
+#             get_adapter(request).send_mail(
+#                 'account/email/password_reset_key', email, context
+#             )
+#
+#         return self.cleaned_data['email']
+#
+#
+# class MyPasswordResetSerializer(PasswordResetSerializer):
+#
+#     def validate_email(self, value):
+#         # use the custom reset form
+#         self.reset_form = CustomAllAuthPasswordResetForm(data=self.initial_data)
+#         if not self.reset_form.is_valid():
+#             raise serializers.ValidationError(self.reset_form.errors)
+#
+#         return value
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -40,7 +89,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['first_name', 'last_name', 'email', 'role', 'username', 'id', 'user_permissions']
 
     def get_user_permissions(self, obj):
-
         return obj.get_all_permissions()
 
     def update(self, instance, validated_data):
@@ -64,10 +112,10 @@ class TicketSerializer(serializers.ModelSerializer):
     ticket_history = serializers.SerializerMethodField()
     ticket_comments = serializers.SerializerMethodField()
 
-
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'assignee', 'status', 'priority', 'type', 'timestamp', 'creator', 'id', 'ticket_history',
+        fields = ['title', 'description', 'assignee', 'status', 'priority', 'type', 'timestamp', 'creator', 'id',
+                  'ticket_history',
                   'project', 'ticket_comments']
 
     def get_ticket_history(self, obj):

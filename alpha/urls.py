@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from dj_rest_auth.views import PasswordResetConfirmView
+from dj_rest_auth.views import PasswordResetConfirmView, PasswordResetView
 from django.views.generic import TemplateView
 from bugtracker.api.views import MyPasswordChangeView
 
@@ -24,11 +24,18 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('admin/', admin.site.urls),
+
+    path('dj-rest-auth/password/reset/', PasswordResetView.as_view(), name="rest_password_reset"),
+
+    path('password/reset/confirm/<uidb64>/<token>/', TemplateView.as_view(),
+         name="password_reset_confirm"),
     path(
-        'password/reset/confirm/<slug:uidb64>/<slug:token>/',
-        PasswordResetConfirmView.as_view(), name='password_reset_confirm'
-    ),
+        "dj-rest-auth/password/reset/confirm/",
+        PasswordResetConfirmView.as_view(), name="rest_password_reset_confirm",),
+
+
     path('dj-rest-auth/password/change/', MyPasswordChangeView.as_view(), name='password_change_view'),
+
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/', include('bugtracker.api.urls')),
