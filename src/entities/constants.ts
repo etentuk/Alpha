@@ -20,11 +20,13 @@ export const userRoles = ['ADMIN', 'PROJECT_MANAGER', 'DEVELOPER', 'SUBMITTER'];
 
 export const demoUsers = userRoles.map((r) => 'demo_' + r.toLowerCase());
 
-let DB_HOST = '';
+let DB_HOST: string;
 
 if (process.env.NODE_ENV === 'development')
     DB_HOST = process.env.REACT_APP_DB_HOST!;
-
+else {
+    DB_HOST = 'https://quinta.herokuapp.com/';
+}
 export const DB_AUTH = `${DB_HOST}dj-rest-auth/`;
 
 export const DB_API = `${DB_HOST}api/`;
