@@ -3,8 +3,22 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: lightgray;
+    background-image: url('https://cdn.wallpapersafari.com/55/23/dY5gq6.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    /* background-color: #fff; */
+    margin: 0 auto !important;
 }
+
+.container div {
+    border: none;
+    background: none;
+}
+
+/* .ant-form-item-label > label {
+    color: #fff !important;
+} */
 
 .content {
     min-width: 30%;
@@ -14,3 +28,17 @@
     align-items: center;
 }
 
+.ant-card {
+    background: none;
+}
+
+.ant-card-bordered {
+    border: none;
+}
+
+.textColor {
+    color: #fff !important;
+}
+.container label {
+    color: #fff !important;
+}

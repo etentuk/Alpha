@@ -52,6 +52,7 @@ const ProjectDetails: FC = () => {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+            responsive: ['md'],
         },
         {
             title: 'Email',
@@ -62,6 +63,7 @@ const ProjectDetails: FC = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'role',
+            responsive: ['sm'],
         },
     ];
 
@@ -75,6 +77,7 @@ const ProjectDetails: FC = () => {
             title: 'Assignee',
             dataIndex: 'assignee',
             key: 'assignee',
+            responsive: ['sm'],
             render: (text: string, record: Ticket) =>
                 record.assignee
                     ? users[record.assignee].username
@@ -85,6 +88,7 @@ const ProjectDetails: FC = () => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
+            responsive: ['md'],
         },
         {
             title: 'Action',

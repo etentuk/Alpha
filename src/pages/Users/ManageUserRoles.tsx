@@ -3,6 +3,7 @@ import { Button, Form, message, Select, Table, Typography } from 'antd';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
 import { manageRole } from '../../api/dataReqs';
+import styles from '../Project/project.module.css';
 
 const ManageUserRoles: FC = () => {
     const { Title } = Typography;
@@ -23,6 +24,7 @@ const ManageUserRoles: FC = () => {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+            ellipsis: true,
         },
         {
             title: 'Email',
@@ -33,6 +35,7 @@ const ManageUserRoles: FC = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'id',
+            responsive: ['md'],
         },
     ];
 
@@ -58,7 +61,7 @@ const ManageUserRoles: FC = () => {
 
     return (
         <div>
-            <Title>Manage User Roles</Title>
+            <Title className={styles.h1}>Manage User Roles</Title>
             <Form
                 name="manageUsers"
                 onFinish={saveRole}
