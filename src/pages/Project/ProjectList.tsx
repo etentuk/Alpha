@@ -6,6 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import appState from '../../store';
 import { Project } from '../../entities/types';
 import styles from './project.module.css';
+import { ColumnsType } from 'antd/es/table';
 
 const ProjectList: FC = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ProjectList: FC = () => {
         filteredTableData.map((p) => users[p.creator].username),
     );
 
-    const columns = [
+    const columns: ColumnsType<Project> = [
         {
             title: 'Name',
             dataIndex: 'name',
@@ -84,7 +85,14 @@ const ProjectList: FC = () => {
             dataIndex: 'action',
             key: 'action',
             render: (text: string, record: Project) => (
-                <Space size="middle" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+                <Space
+                    size="middle"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                    }}
+                >
                     <Button>
                         <Link to={`${record.id}`}>Details</Link>
                     </Button>
@@ -111,10 +119,9 @@ const ProjectList: FC = () => {
                         suffix={<SearchOutlined />}
                         placeholder="Search Project Titles"
                     />
-                    
                 </div>
                 <div>
-                {user.user_permissions.includes(
+                    {user.user_permissions.includes(
                         'bugtracker.add_project',
                     ) ? (
                         <Button onClick={() => navigate('create')}>

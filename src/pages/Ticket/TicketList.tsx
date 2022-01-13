@@ -12,8 +12,7 @@ import {
     ticketType,
 } from '../../entities/constants';
 import styles from './ticket.module.css';
-import { ColumnCount } from 'antd/lib/list';
-import { ColumnType } from 'antd/lib/table';
+import { ColumnsType } from 'antd/lib/table';
 
 const TicketList: FC = () => {
     const { Title } = Typography;
@@ -46,7 +45,7 @@ const TicketList: FC = () => {
         filteredTableData.map((t) => projects[t.project].name),
     );
 
-    const columns: ColumnType<Ticket> = [
+    const columns: ColumnsType<Ticket> = [
         {
             title: 'Title',
             dataIndex: 'title',
@@ -69,7 +68,6 @@ const TicketList: FC = () => {
                 projects[record.project].name,
             onFilter: (value: any, record: Ticket) =>
                 projects[record.project].name === value,
-                
         },
         {
             title: 'Developer Assigned',
@@ -82,7 +80,7 @@ const TicketList: FC = () => {
                 })),
             ],
             ellipsis: true,
-                    responsive: ['lg'],
+            responsive: ['lg'],
             render: (text: string, record: Ticket) =>
                 record.assignee
                     ? users[record.assignee].username
@@ -92,7 +90,6 @@ const TicketList: FC = () => {
                 record.assignee
                     ? users[record.assignee].username === value
                     : value === 'Unassigned',
-                    
         },
         {
             title: 'Status',
@@ -102,10 +99,9 @@ const TicketList: FC = () => {
                 ...ticketStatus.map((stat) => ({ text: stat, value: stat })),
             ],
             ellipsis: true,
-                responsive: ['lg'],
+            responsive: ['lg'],
             onFilter: (value: any, record: Ticket) =>
                 record.status.indexOf(value) === 0,
-                
         },
         {
             title: 'Type',
@@ -116,7 +112,6 @@ const TicketList: FC = () => {
             filters: [...ticketType.map((typ) => ({ text: typ, value: typ }))],
             onFilter: (value: any, record: Ticket) =>
                 record.type.indexOf(value) === 0,
-               
         },
         {
             title: 'Priority',
@@ -132,7 +127,6 @@ const TicketList: FC = () => {
             responsive: ['lg'],
             onFilter: (value: any, record: Ticket) =>
                 record.priority.indexOf(value) === 0,
-               
         },
         {
             title: 'Date Created',
@@ -173,7 +167,7 @@ const TicketList: FC = () => {
         <div>
             <div className={styles.header}>
                 <Title level={2}>Tickets</Title>
-                <div style={{maxWidth: '30%', marginBottom: '1rem'}}>
+                <div style={{ maxWidth: '30%', marginBottom: '1rem' }}>
                     <Input
                         onChange={(e) => setSearch(e.target.value)}
                         suffix={<SearchOutlined />}

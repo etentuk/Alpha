@@ -6,8 +6,9 @@ import { view } from '@risingstack/react-easy-state';
 import { useForm } from 'antd/es/form/Form';
 import cloneDeep from 'lodash/cloneDeep';
 import appState from '../../store';
-import { TicketComment } from '../../entities/types';
+import { TicketComment, User } from '../../entities/types';
 import { createObject, deleteObject, editObject } from '../../api/dataReqs';
+import { ColumnsType } from 'antd/es/table';
 
 interface TicketCommentViewProps {
     ticketID: number;
@@ -69,14 +70,14 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
         }
     };
 
-    const columns = [
+    const columns: ColumnsType<TicketComment> = [
         {
             title: 'Commenter',
             dataIndex: 'commenter',
             key: 'commenter',
             render: (text: string, record: TicketComment) =>
                 users[record.commenter].username,
-                responsive: ['md'],
+            responsive: ['md'],
         },
         {
             title: 'Message',
@@ -89,7 +90,7 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
             key: 'timestamp',
             render: (text: string, record: TicketComment) =>
                 new Date(record.timestamp).toUTCString(),
-                responsive: ['md'],
+            responsive: ['md'],
         },
         {
             title: 'Action',
