@@ -3,9 +3,10 @@ import { Button, message, Popconfirm, Space, Table, Typography } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
-import { Ticket } from '../../entities/types';
+import { Ticket, User } from '../../entities/types';
 import { deleteObject } from '../../api/dataReqs';
 import styles from './project.module.css';
+import { ColumnsType } from 'antd/lib/table';
 
 const ProjectDetails: FC = () => {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const ProjectDetails: FC = () => {
         }
     };
 
-    const columns = [
+    const columns: ColumnsType<User> = [
         {
             title: 'Username',
             dataIndex: 'username',
@@ -67,7 +68,7 @@ const ProjectDetails: FC = () => {
         },
     ];
 
-    const ticketColumns = [
+    const ticketColumns: ColumnsType<Ticket> = [
         {
             title: 'Title',
             dataIndex: 'title',

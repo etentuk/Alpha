@@ -12,6 +12,8 @@ import {
     ticketType,
 } from '../../entities/constants';
 import styles from './ticket.module.css';
+import { ColumnCount } from 'antd/lib/list';
+import { ColumnType } from 'antd/lib/table';
 
 const TicketList: FC = () => {
     const { Title } = Typography;
@@ -44,7 +46,7 @@ const TicketList: FC = () => {
         filteredTableData.map((t) => projects[t.project].name),
     );
 
-    const columns = [
+    const columns: ColumnType<Ticket> = [
         {
             title: 'Title',
             dataIndex: 'title',

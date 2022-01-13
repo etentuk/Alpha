@@ -5,6 +5,7 @@ import appState from '../../store';
 import { manageRole } from '../../api/dataReqs';
 import { demoUsers } from '../../entities/constants';
 import styles from '../Project/project.module.css';
+import { ColumnProps, ColumnsType } from 'antd/lib/table';
 
 
 
@@ -26,7 +27,7 @@ const ManageUserRoles: FC = () => {
         </Option>
     ));
 
-    const columns = [
+    const columns: ColumnsType<User> = [
         {
             title: 'Username',
             dataIndex: 'username',

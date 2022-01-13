@@ -74,12 +74,7 @@ const Login: FC = () => {
                                 <Input.Password />
                             </Form.Item>
 
-                            <Form.Item
-                                wrapperCol={{
-                                    offset: 8,
-                                    span: 16,
-                                }}
-                            >
+                            <Form.Item style={{ display: 'flex', alignItems: 'center' }}>
                                 <Button type="primary" htmlType="submit">
                                     Submit
                                 </Button>
