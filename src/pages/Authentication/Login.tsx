@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import AuthContainer from './AuthContainer';
 import { authPostKeyReturn } from '../../api/Authentication';
-import Demo_login from './Demo_login';
+import DemoLogin from './DemoLogin';
 
 const Login: FC = () => {
     const [alert, setAlert] = useState(false);
@@ -22,9 +22,10 @@ const Login: FC = () => {
             'login/',
         );
         if (loginSuccess === 'success') {
-            return navigate('/');
+            navigate('/');
+        } else {
+            setAlert(true);
         }
-        setAlert(true);
     };
     const { Title, Text } = Typography;
     return (
@@ -110,7 +111,7 @@ const Login: FC = () => {
                     </>
                 ) : (
                     <div>
-                        <Demo_login />
+                        <DemoLogin onSubmit={onSubmit} />
                         <Space>
                             <Text>
                                 Got an Account?

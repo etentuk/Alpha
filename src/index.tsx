@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
+import '@ant-design/flowchart/dist/index.css';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
