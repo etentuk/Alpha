@@ -36,7 +36,6 @@ export const authPost = async (formData: any, url: string) => {
 
 export const authPostKeyReturn = async (formData: any, url: string) => {
     try {
-        console.log(`${DB_AUTH}${url}`);
         const {
             data: { key },
         } = await axios.post(`${DB_AUTH}${url}`, {
@@ -69,11 +68,10 @@ export const passwordResetConfirm = async (formData: {
 export const logoutUser = async () => {
     try {
         appState.isLoaded = false;
-        resetUser();
+        await axios.post(`${DB_AUTH}logout/`);
+        setToken('');
         localStorage.removeItem('token');
         localStorage.removeItem('expirationDate');
-        setToken('');
-        await axios.post(`${DB_AUTH}logout/`);
         appState.isLoaded = true;
     } catch (e) {
         message.error('Error Logging Out, Refresh and try again');

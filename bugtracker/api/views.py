@@ -15,7 +15,7 @@ from django.conf import settings
 class IsNotDemoUser(BasePermission):
 
     def has_permission(self, request, view):
-        demo_users = ['DEMO_ADMIN', 'DEMO_PROJECT_MANAGER', 'DEMO_DEVELOPER', 'DEMO_SUBMITTER']
+        demo_users = ['demo_admin', 'demo_project_manager', 'demo_developer', 'demo_submitter']
         if request.user.username in demo_users:
             return False
         else:
@@ -41,7 +41,7 @@ class RoleChangePermission(BasePermission):
 
 
 class UpdateUserRole(APIView):
-    permission_classes = [RoleChangePermission]
+    permission_classes = [RoleChangePermission, IsNotDemoUser]
 
     def put(self, request):
         print(request.data)

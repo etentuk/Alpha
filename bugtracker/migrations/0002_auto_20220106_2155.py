@@ -39,7 +39,7 @@ def create_groups(apps, schema_migration):
     project_manager.permissions.add(*ticket_permissions, *project_permissions)
     developer.permissions.add(*ticket_permissions, project_permissions[0])
     submitter.permissions.add(
-        ticket_permissions[0], ticket_permissions[1], project_permissions[0])
+        ticket_permissions[0], ticket_permissions[1], ticket_permissions[2], project_permissions[0])
 
     demo_admin = User.objects.create_user('demo_admin', 'demo_admin@example.com',
                                           os.environ.get('REACT_APP_DEMO_PASSWORD'))

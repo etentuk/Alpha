@@ -43,6 +43,8 @@ const ProjectList: FC = () => {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
+            ellipsis: true,
+            responsive: ['md'],
         },
         {
             title: 'Manager',
@@ -56,6 +58,8 @@ const ProjectList: FC = () => {
                     value: createdBy,
                 })),
             ],
+            ellipsis: true,
+            responsive: ['lg'],
             onFilter: (value: any, record: Project) =>
                 users[record.creator].username === value,
         },
@@ -72,13 +76,15 @@ const ProjectList: FC = () => {
                 const bDate = new Date(b.timestamp);
                 return aDate.getTime() - bDate.getTime();
             },
+            ellipsis: true,
+            responsive: ['lg'],
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
             render: (text: string, record: Project) => (
-                <Space size="middle">
+                <Space size="middle" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                     <Button>
                         <Link to={`${record.id}`}>Details</Link>
                     </Button>
@@ -99,20 +105,22 @@ const ProjectList: FC = () => {
             <div className={styles.header}>
                 <div>
                     <Title>Projects</Title>
-                    {user.user_permissions.includes(
+
+                    <Input
+                        onChange={(e) => setSearch(e.target.value)}
+                        suffix={<SearchOutlined />}
+                        placeholder="Search Project Titles"
+                    />
+                    
+                </div>
+                <div>
+                {user.user_permissions.includes(
                         'bugtracker.add_project',
                     ) ? (
                         <Button onClick={() => navigate('create')}>
                             Create New Project
                         </Button>
                     ) : null}
-                </div>
-                <div>
-                    <Input
-                        onChange={(e) => setSearch(e.target.value)}
-                        suffix={<SearchOutlined />}
-                        placeholder="Search Project Titles"
-                    />
                 </div>
             </div>
             <Table

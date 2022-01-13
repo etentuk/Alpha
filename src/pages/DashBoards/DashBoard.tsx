@@ -1,4 +1,5 @@
 import React from 'react';
+import './Dashboard.styles.css';
 import { Column, ColumnConfig, Pie, PieConfig } from '@ant-design/charts';
 import { Col } from 'antd';
 import cloneDeep from 'lodash/cloneDeep';
@@ -140,6 +141,7 @@ const Dashboard = () => {
                     whiteSpace: 'pre-wrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
+                    fontSize: '60%',
                 },
                 content: title,
             },
@@ -148,13 +150,15 @@ const Dashboard = () => {
 
     return (
         <div
+        className='charts'
             style={{
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'space-evenly',
             }}
         >
-            <Col style={{ width: '35%' }}>
+
+            <Col className='column'>
                 <Column
                     {...getBarConfig(
                         'priority',
@@ -173,7 +177,7 @@ const Dashboard = () => {
                     )}
                 />
             </Col>
-            <Col style={{ width: '35%' }}>
+            <Col className='column'>
                 <Column
                     {...getBarConfig(
                         'status',

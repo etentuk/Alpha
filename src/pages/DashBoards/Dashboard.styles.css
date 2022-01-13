@@ -1,0 +1,19 @@
+.column {
+  width: 30%;
+}
+
+@media only screen and (max-width: 600px) {
+  .charts {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .charts > div {
+    width: 80% !important;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .charts > div {
+    width: 40%;
+  }
+}

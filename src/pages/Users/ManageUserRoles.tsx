@@ -3,6 +3,11 @@ import { Button, Form, message, Select, Table, Typography } from 'antd';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
 import { manageRole } from '../../api/dataReqs';
+import { demoUsers } from '../../entities/constants';
+import styles from '../Project/project.module.css';
+import { ColumnProps, ColumnsType } from 'antd/lib/table';
+
+
 
 const ManageUserRoles: FC = () => {
     const { Title } = Typography;
@@ -12,17 +17,22 @@ const ManageUserRoles: FC = () => {
 
     const [form] = Form.useForm();
 
-    const children = getUsersArray().map((user) => (
+    const app_users = getUsersArray().filter(
+        (u) => !demoUsers.includes(u.username),
+    );
+
+    const children = app_users.map((user) => (
         <Option value={user.id} key={user.username}>
             {user.username}
         </Option>
     ));
 
-    const columns = [
+    const columns: ColumnsType<User> = [
         {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+            ellipsis: true,
         },
         {
             title: 'Email',
@@ -33,6 +43,7 @@ const ManageUserRoles: FC = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'id',
+            responsive: ['md'],
         },
     ];
 
@@ -58,7 +69,7 @@ const ManageUserRoles: FC = () => {
 
     return (
         <div>
-            <Title>Manage User Roles</Title>
+            <Title className={styles.h1}>Manage User Roles</Title>
             <Form
                 name="manageUsers"
                 onFinish={saveRole}
@@ -102,7 +113,7 @@ const ManageUserRoles: FC = () => {
             <Table
                 style={{ marginTop: '20px' }}
                 columns={columns}
-                dataSource={getUsersArray()}
+                dataSource={app_users}
                 bordered
                 title={() => 'Assignees'}
                 rowKey="id"

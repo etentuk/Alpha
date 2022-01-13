@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Title from 'antd/es/typography/Title';
 import { Alert, Button, Form, Input, message, Result } from 'antd';
 import { passwordResetConfirm } from '../../api/Authentication';
+import AuthContainer from './AuthContainer';
 
 const PasswordReset: FC = () => {
     const { uid, token } = useParams();
@@ -37,7 +38,7 @@ const PasswordReset: FC = () => {
     };
 
     return (
-        <div>
+        <AuthContainer>
             {!redirect ? (
                 <>
                     <Title>Reset Account Password</Title>
@@ -104,7 +105,7 @@ const PasswordReset: FC = () => {
                     ]}
                 />
             )}
-        </div>
+        </AuthContainer>
     );
 };
 
