@@ -8,7 +8,7 @@ const SideBarHeader: FC<{ collapsed: boolean }> = ({ collapsed }) => {
         <div id="logo" className={styles.container}>
             <Link className={styles.linkContainer} to="/">
                 <img
-                    src="/quinta_logo.jpg"
+                    src="/logo.PNG"
                     alt="Logo"
                     style={{
                         display: 'inline-block',
@@ -16,7 +16,7 @@ const SideBarHeader: FC<{ collapsed: boolean }> = ({ collapsed }) => {
                         width: '32px',
                     }}
                 />
-                <h1 style={{ visibility }}>Quinta</h1>
+                <h1 style={{ visibility }}>Buggington</h1>
             </Link>
         </div>
     );

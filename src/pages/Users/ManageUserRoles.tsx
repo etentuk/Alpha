@@ -4,6 +4,10 @@ import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
 import { manageRole } from '../../api/dataReqs';
 import { demoUsers } from '../../entities/constants';
+import styles from '../Project/project.module.css';
+import { ColumnProps, ColumnsType } from 'antd/lib/table';
+
+
 
 const ManageUserRoles: FC = () => {
     const { Title } = Typography;
@@ -23,11 +27,12 @@ const ManageUserRoles: FC = () => {
         </Option>
     ));
 
-    const columns = [
+    const columns: ColumnsType<User> = [
         {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+            ellipsis: true,
         },
         {
             title: 'Email',
@@ -38,6 +43,7 @@ const ManageUserRoles: FC = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'id',
+            responsive: ['md'],
         },
     ];
 
@@ -63,7 +69,7 @@ const ManageUserRoles: FC = () => {
 
     return (
         <div>
-            <Title>Manage User Roles</Title>
+            <Title className={styles.h1}>Manage User Roles</Title>
             <Form
                 name="manageUsers"
                 onFinish={saveRole}

@@ -76,6 +76,7 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
             key: 'commenter',
             render: (text: string, record: TicketComment) =>
                 users[record.commenter].username,
+                responsive: ['md'],
         },
         {
             title: 'Message',
@@ -88,11 +89,13 @@ const TicketCommentComponent: FC<TicketCommentViewProps> = ({ ticketID }) => {
             key: 'timestamp',
             render: (text: string, record: TicketComment) =>
                 new Date(record.timestamp).toUTCString(),
+                responsive: ['md'],
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
+            responsive: ['lg'],
             render: (text: string, record: TicketComment) => (
                 <Space>
                     {user.id === record.commenter || user.role === 'ADMIN' ? (

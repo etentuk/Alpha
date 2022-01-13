@@ -3,9 +3,10 @@ import { Button, message, Popconfirm, Space, Table, Typography } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { view } from '@risingstack/react-easy-state';
 import appState from '../../store';
-import { Ticket } from '../../entities/types';
+import { Ticket, User } from '../../entities/types';
 import { deleteObject } from '../../api/dataReqs';
 import styles from './project.module.css';
+import { ColumnsType } from 'antd/lib/table';
 
 const ProjectDetails: FC = () => {
     const navigate = useNavigate();
@@ -47,11 +48,12 @@ const ProjectDetails: FC = () => {
         }
     };
 
-    const columns = [
+    const columns: ColumnsType<User> = [
         {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+            responsive: ['md'],
         },
         {
             title: 'Email',
@@ -62,10 +64,11 @@ const ProjectDetails: FC = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'role',
+            responsive: ['sm'],
         },
     ];
 
-    const ticketColumns = [
+    const ticketColumns: ColumnsType<Ticket> = [
         {
             title: 'Title',
             dataIndex: 'title',
@@ -75,6 +78,7 @@ const ProjectDetails: FC = () => {
             title: 'Assignee',
             dataIndex: 'assignee',
             key: 'assignee',
+            responsive: ['sm'],
             render: (text: string, record: Ticket) =>
                 record.assignee
                     ? users[record.assignee].username
@@ -85,6 +89,7 @@ const ProjectDetails: FC = () => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
+            responsive: ['md'],
         },
         {
             title: 'Action',

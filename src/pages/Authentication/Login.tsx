@@ -5,6 +5,9 @@ import { view } from '@risingstack/react-easy-state';
 import AuthContainer from './AuthContainer';
 import { authPostKeyReturn } from '../../api/Authentication';
 import DemoLogin from './DemoLogin';
+import styles from './AuthContainer.module.css';
+
+
 
 const Login: FC = () => {
     const [alert, setAlert] = useState(false);
@@ -29,12 +32,13 @@ const Login: FC = () => {
     };
     const { Title, Text } = Typography;
     return (
-        <AuthContainer>
+        <div className={styles.loginContainer}>
+            <AuthContainer>
             <>
                 {!demo ? (
                     <>
                         <Form name="login" onFinish={onSubmit}>
-                            <Title>Login</Title>
+                            <Title style={{color: '#fff' }}>Login</Title>
                             {alert && (
                                 <Alert
                                     message="Incorrect UserName or Password! Please try again! "
@@ -46,6 +50,7 @@ const Login: FC = () => {
                             )}
                             <Form.Item
                                 label="Username"
+                                // style={{color: "#fff"}}
                                 rules={[
                                     {
                                         required: true,
@@ -69,12 +74,7 @@ const Login: FC = () => {
                                 <Input.Password />
                             </Form.Item>
 
-                            <Form.Item
-                                wrapperCol={{
-                                    offset: 8,
-                                    span: 16,
-                                }}
-                            >
+                            <Form.Item style={{ display: 'flex', alignItems: 'center' }}>
                                 <Button type="primary" htmlType="submit">
                                     Submit
                                 </Button>
@@ -84,20 +84,20 @@ const Login: FC = () => {
                         <Space
                             style={{ display: 'flex', flexDirection: 'column' }}
                         >
-                            <Text>
+                            <Text style={{color: '#fff' }}>
                                 If you don&apos;t have an Account you can also
                                 <Link to="../register"> Register</Link> a new
                                 one
                                 <Link to="../register"> here. </Link>
                             </Text>
-                            <Text>
+                            <Text style={{color: '#fff' }}>
                                 Forgot Password?
                                 <Link to="../request-password-reset">
                                     {' '}
                                     Reset your Password
                                 </Link>
                             </Text>
-                            <Text>
+                            <Text style={{color: '#fff' }}>
                                 If you would like to test out the site, you can
                                 sign in as a{' '}
                                 <Button
@@ -140,6 +140,8 @@ const Login: FC = () => {
                 )}
             </>
         </AuthContainer>
+        </div>
+        
     );
 };
 

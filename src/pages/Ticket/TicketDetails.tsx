@@ -91,10 +91,10 @@ const TicketDetails = () => {
                         </div>
                     </div>
                     <div className={styles.ticketExtras}>
-                        <div style={{ width: '45%' }}>
+                        <div className={styles.commentTickets}>
                             <TicketCommentComponent ticketID={ticket.id} />
                         </div>
-                        <div style={{ width: '45%', overflow: 'auto' }}>
+                        <div className={styles.commentTickets} style={{ overflow: 'auto' }}>
                             <Card
                                 style={{ minHeight: '100%', overflow: 'auto' }}
                             >

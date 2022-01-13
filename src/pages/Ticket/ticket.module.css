@@ -1,12 +1,16 @@
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 .ticketDetailsBody {
     display: flex;
     flex-direction: column;
+}
+
+h3 {
+    transition: font-size 2s;
 }
 
 
@@ -26,7 +30,6 @@
     justify-content: space-between;
     text-align: left;
     padding: 20px;
-    max-height: 60vh;
 }
 
 .ticketDetailsRow {
@@ -36,6 +39,63 @@
     text-align: left;
 }
 
+/* .ticketExtras:f */
 
+.commentTickets:first-child {
+    width: 70%;
+}
 
+.commentTickets:nth-child(2) {
+    width: 25%;
+    height: auto;
+    bottom: 0;
+}
 
+@media only screen and (min-width: 1100px) {
+    .ticketExtras {
+        max-height: 60vh;
+    }
+  }
+
+@media only screen and (max-width: 500px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h3 {
+        font-size: 16px !important;
+    }
+    .ticketDetailsTextRight,
+    .ticketDetailsTextLeft {
+        padding: 10px;
+    }
+
+    .ticketExtras {
+        padding: 5px;
+        max-height: 100%;
+    }
+    
+  }
+@media only screen and (max-width: 1110px) {
+    .ticketExtras {
+        flex-direction: column;
+    }
+
+    .commentTickets {
+      width: 95% !important;
+    }
+  }
+
+@media only screen and (max-width: 1400px) {
+    .detailEditButton {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .commentTickets {
+        width: 45%;
+    }
+  }
