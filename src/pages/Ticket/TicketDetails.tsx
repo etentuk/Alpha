@@ -9,7 +9,7 @@ import TicketCommentComponent from './TicketComments';
 
 const TicketDetails = () => {
     const navigate = useNavigate();
-    const { tickets, delObject, users, isLoaded } = appState;
+    const { tickets, delObject, users, isLoaded, user } = appState;
     const { Title, Text } = Typography;
     const { id } = useParams();
 
@@ -48,9 +48,11 @@ const TicketDetails = () => {
                     <Button>
                         <Link to={`../edit/${ticket.id}`}>Edit</Link>
                     </Button>
-                    <Button danger onClick={() => del(ticket.id!)}>
-                        Delete
-                    </Button>
+                    {user.role !== 'SUBMITTER' ? (
+                        <Button danger onClick={() => del(ticket.id!)}>
+                            Delete
+                        </Button>
+                    ) : null}
                 </Space>
             </div>
 
