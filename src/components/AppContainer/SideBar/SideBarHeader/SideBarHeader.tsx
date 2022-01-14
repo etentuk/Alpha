@@ -8,7 +8,7 @@ const SideBarHeader: FC<{ collapsed: boolean }> = ({ collapsed }) => {
         <div id="logo" className={styles.container}>
             <Link className={styles.linkContainer} to="/">
                 <img
-                    src="/logo.PNG"
+                    src="static/logo.PNG"
                     alt="Logo"
                     style={{
                         display: 'inline-block',
