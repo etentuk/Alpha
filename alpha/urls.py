@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from dj_rest_auth.views import PasswordResetConfirmView, PasswordResetView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from bugtracker.api.views import MyPasswordChangeView
+from django.contrib.staticfiles.storage import staticfiles_storage
+
 
 
 urlpatterns = [
@@ -39,5 +41,6 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/', include('bugtracker.api.urls')),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('/favicon.ico'))),
     re_path('.*', TemplateView.as_view(template_name='index.html'))
 ]
