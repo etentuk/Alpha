@@ -25,7 +25,7 @@ let DB_HOST: string;
 if (process.env.NODE_ENV === 'development')
     DB_HOST = process.env.REACT_APP_DB_HOST!;
 else {
-    DB_HOST = 'https://quinta.herokuapp.com/';
+    DB_HOST = 'https://buggington.herokuapp.com/';
 }
 export const DB_AUTH = `${DB_HOST}dj-rest-auth/`;
 
