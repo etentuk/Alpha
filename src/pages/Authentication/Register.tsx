@@ -17,11 +17,13 @@ const Register: FC = () => {
         const res = await authPostKeyReturn(values, 'registration/');
         if (res === 'success') {
             return navigate('/');
+        } else {
+            const errors = res.response.data;
+            setErrorAlert({
+                visible: true,
+                message: Object.values(errors).join(' '),
+            });
         }
-        setErrorAlert({
-            visible: true,
-            message: Object.values(res).join(' '),
-        });
     };
 
     return (
